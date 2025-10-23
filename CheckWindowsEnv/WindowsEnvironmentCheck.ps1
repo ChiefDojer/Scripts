@@ -1,14 +1,13 @@
 # ================================================================
-# 🧠 ULTIMATE WINDOWS DEVELOPER ENVIRONMENT CHECKER (v3.2)
+# 🧠 ULTIMATE WINDOWS DEVELOPER ENVIRONMENT CHECKER (v3.4)
 # ================================================================
-# Enhancement: Custom parsing logic added for 'pip' to display a clean format 
-#              showing both Pip and Python versions (e.g., pip 25.2, Python 3.13).
+# Enhancement: Added check for 'uvx' (UV's environment executor).
 # ================================================================
 
 # --- INITIALIZATION ---
 # --- TITLE FIX: Save the original console title ---
 $originalTitle = $Host.UI.RawUI.WindowTitle
-Write-Host "`n=== ULTIMATE DEV ENVIRONMENT CHECK START (v3.2) ===`n" -ForegroundColor Cyan
+Write-Host "`n=== ULTIMATE DEV ENVIRONMENT CHECK START (v3.4) ===`n" -ForegroundColor Cyan
 $results = @{}
 
 # Refactored function to be more robust, clean multi-line output,
@@ -214,6 +213,11 @@ try {
 Check-Command "pipx" "pipx" "--version"
 Check-Command "poetry" "Poetry" "--version"
 Check-Command "pipenv" "Pipenv" "--version"
+# --- New Checks for Modern Python Tools ---
+Check-Command "rye" "Rye (Package Manager)" "--version"
+Check-Command "uv" "UV (Python Installer)" "--version"
+Check-Command "uvx" "UVX (Python Executor)" "--version" # Added UVX check
+# --- End New Checks ---
 try {
     $venvTest = python -m venv testenv 2>$null
     if (Test-Path "./testenv") {
@@ -276,9 +280,11 @@ Write-Host "`n" # Add a newline to separate this section from the next
 # ---------------------------------------------------------------
 Write-Host "--- Checking Web/Frontend Tools ---" -ForegroundColor Yellow
 Check-Command "node" "Node.js" "-v"
+# The three requested JS Package Managers are here:
 Check-Command "npm" "npm" "-v"
 Check-Command "pnpm" "pnpm" "-v"
 Check-Command "yarn" "yarn" "-v"
+# End JS Package Manager checks
 Check-Command "ng" "Angular CLI" "version"
 Check-Command "vue" "Vue CLI" "--version"
 Check-Command "tsc" "TypeScript Compiler" "--version" # Explicit TypeScript check
@@ -319,6 +325,10 @@ Check-Command "gcloud" "Google Cloud CLI" "version"
 Write-Host "--- Checking Microsoft Stack ---" -ForegroundColor Yellow
 Check-Command "dotnet" ".NET SDK" "--version"
 Check-Command "msbuild" "MSBuild" "-version"
+
+# The requested .NET Package Manager check is here:
+Check-Command "nuget" "NuGet" ""
+# End .NET Package Manager check
 
 # DEDICATED CHECK: Visual Studio (devenv.exe)
 # devenv.exe is typically NOT in the system PATH, so we must search for it.
@@ -363,8 +373,6 @@ try {
     $results["Visual Studio (Full)"] = "Missing"
 }
 
-Check-Command "nuget" "NuGet" ""
-
 # ---------------------------------------------------------------
 # 🧰 DATABASES
 # ---------------------------------------------------------------
@@ -388,8 +396,11 @@ Check-Command "gpg" "GPG" "--version"
 # ⚙️ BUILD & PACKAGE MANAGERS
 # ---------------------------------------------------------------
 Write-Host "--- Checking Build & Package Tools ---" -ForegroundColor Yellow
+# The two requested Java Package Managers are here:
 Check-Command "gradle" "Gradle" "--version"
 Check-Command "mvn" "Maven" "-v"
+# End Java Package Manager checks
+
 Check-Command "choco" "Chocolatey" "--version"
 Check-Command "winget" "Winget" "--version"
 
