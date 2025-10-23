@@ -8,7 +8,7 @@ The **Ultimate Windows Developer Environment Checker** is a comprehensive PowerS
 
 ## Overview
 
-This automated auditing tool systematically checks over 50 different development tools, platforms, and system features across multiple technology stacks. It provides color-coded output with detailed version information, making it easy to identify missing dependencies, outdated tools, or configuration issues.
+This automated auditing tool systematically checks over 50+ different development tools, platforms, and system features across multiple technology stacks. It provides color-coded output with detailed version information, making it easy to identify missing dependencies, outdated tools, or configuration issues.
 
 ### Key Features
 
@@ -109,11 +109,15 @@ Comprehensive Python development stack validation:
 - **Python Interpreter**: Base runtime check
 - **pip**: Package installer with custom dual-version display (pip version + Python version)
 - **pipx**: Isolated CLI application installer
+- **uv**: Next-generation Python package installer (Rust-based, extremely fast)
+- **uvx**: Python package executor (runs packages without installation)
 - **Poetry**: Modern dependency management and packaging
 - **Pipenv**: Virtual environment and dependency manager
 - **venv Module**: Tests actual virtual environment creation (not just presence)
 
 **Custom Enhancement**: The pip check extracts both pip version and associated Python version using regex pattern matching on the output format: `pip X.Y from ... (python Z.A)`
+
+**Modern Python Tooling**: The script now includes checks for **uv** and **uvx**, which represent the cutting-edge of Python package management. These Rust-based tools offer dramatically faster package installation and resolution compared to traditional pip, making them increasingly popular in modern Python workflows.
 
 ### 4. Programming Runtimes
 
@@ -285,6 +289,10 @@ The script properly handles tools that:
 
 **Major Enhancement**: Custom pip parser displaying both pip and Python versions in format: `pip 25.2, Python 3.13`
 
+**Python Ecosystem Expansion**: Added support for next-generation Python package management tools:
+- **uv**: Ultra-fast Python package installer written in Rust (10-100x faster than pip)
+- **uvx**: Python package executor that runs packages without installation
+
 **Implementation**:
 ```powershell
 $parser = 'pip (\d+\.\d+).*\(python (\d+\.\d+)\)'
@@ -292,6 +300,13 @@ if ($versionString -match $parser) {
     $displayVersion = "pip $($Matches[1]), Python $($Matches[2])"
 }
 ```
+
+**Why uv/uvx Matter**: These tools represent a paradigm shift in Python package management, offering:
+- Dramatically faster dependency resolution
+- Better disk space efficiency
+- Improved reproducibility
+- Modern CLI design
+- Drop-in pip replacement capability
 
 ### Key Historical Improvements
 
@@ -305,22 +320,25 @@ if ($versionString -match $parser) {
 ## Use Cases
 
 ### 1. Onboarding New Developers
-Run script on new machines to verify complete environment setup and identify missing tools.
+Run script on new machines to verify complete environment setup and identify missing tools, including modern Python tooling like uv/uvx.
 
 ### 2. Pre-Project Audits
-Before starting a new project, confirm all required dependencies are installed.
+Before starting a new project, confirm all required dependencies are installed, especially critical for Python projects using modern package managers.
 
 ### 3. Troubleshooting Build Failures
-When builds fail mysteriously, verify that all build tools are present and accessible.
+When builds fail mysteriously, verify that all build tools are present and accessible. The script now catches if developers are missing newer tools like uv that projects may require.
 
 ### 4. Documentation Generation
-Export the summary to create accurate "Development Environment" documentation sections.
+Export the summary to create accurate "Development Environment" documentation sections that reflect both legacy and modern tooling.
 
 ### 5. CI/CD Agent Validation
-Run on build agents to verify consistent tooling across the pipeline.
+Run on build agents to verify consistent tooling across the pipeline, ensuring both traditional (pip) and modern (uv) Python tools are available.
 
 ### 6. Migration Verification
-After OS upgrades or machine migrations, confirm all tools were properly restored.
+After OS upgrades or machine migrations, confirm all tools were properly restored, including checking for adoption of next-generation Python tools.
+
+### 7. Tool Migration Planning
+Identify which machines have adopted modern tools (uv/uvx) versus those still using legacy tooling, helping plan migration strategies.
 
 ---
 
