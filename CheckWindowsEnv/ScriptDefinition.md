@@ -20,6 +20,33 @@ This automated auditing tool systematically checks over 50+ different developmen
 - **Summary Report**: Consolidated status table at completion
 - **Non-Destructive**: Read-only operations with no system modifications
 
+
+### Glossary
+
+TBD
+
+### Plans. ToDo
+
+#### Add Glossary to Readme - To Do 
+nvm (Node Version Manager)
+npm (Node Package Manager)
+npx (Node Package Runner)
+Yarn ()
+pnpm (Performant NPM)
+
+#### Extent 7 Web & Frontend Development - ToDo
+NVM Check 
+
+---
+
+## Tools and Services for Check
+Tools / Service
+Category
+Short Definition
+Command
+Windows 
+Linux
+
 ---
 
 ## Technical Architecture
@@ -77,6 +104,7 @@ For tools with multiple installation methods (e.g., Docker Compose):
 - Reports which variant was detected
 
 ---
+
 
 ## Category Breakdown
 
