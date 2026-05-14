@@ -46,6 +46,16 @@ See [FindGitHubAccounts/ScriptDefinition.md](FindGitHubAccounts/ScriptDefinition
 
 ---
 
+### PortScan *(cross-platform)*
+
+`PortScan/PortScan.sh`
+
+TCP port scanner written in Bash. Scans open ports on localhost then auto-detects the local /24 subnet and scans all live hosts. Uses **nmap** when available for speed; falls back to pure Bash `/dev/tcp` with batched parallel probes when nmap is absent. Supports ~140 curated common ports (default), full range 1–65535, or a custom comma-separated list via `--ports`. Includes a service-name map for ~90 well-known ports.
+
+See [PortScan/ScriptDefinition.md](PortScan/ScriptDefinition.md).
+
+---
+
 ## Quickstart
 
 ### EnvironmentCheck — cross-platform
@@ -127,6 +137,28 @@ powershell -ExecutionPolicy Bypass -File .\FindGitHubAccounts.ps1
 
 ---
 
+### PortScan — cross-platform Bash
+
+```bash
+# Linux / macOS
+chmod +x PortScan/PortScan.sh
+./PortScan/PortScan.sh
+
+# Windows — .bat launcher
+.\PortScan\PortScan.bat
+
+# Windows — Git Bash
+bash PortScan/PortScan.sh
+
+# Scan all ports on localhost only
+./PortScan/PortScan.sh --ports all --no-subnet
+
+# Scan a specific host with a custom port list
+./PortScan/PortScan.sh --host 192.168.1.50 --ports 22,80,443,3306
+```
+
+---
+
 ## Notes
 
 - Some checks (Hyper-V, IIS, Windows Optional Features) require an elevated PowerShell or admin shell for full results; the scripts degrade gracefully when permissions are missing.
@@ -163,4 +195,9 @@ SSHKeysCheck/
 FindGitHubAccounts/
   FindGitHubAccounts.ps1       — Windows-only GitHub account auditor (PowerShell)
   ScriptDefinition.md          — design notes
+
+PortScan/
+  PortScan.sh                  — cross-platform TCP port scanner (nmap + bash/dev/tcp fallback)
+  PortScan.bat                 — Windows launcher (finds Git Bash via registry, runs the .sh)
+  ScriptDefinition.md          — design notes, options, and port preset reference
 ```
